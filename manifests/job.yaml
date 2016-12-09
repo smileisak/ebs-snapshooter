@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ebs-snapshots-job
+spec:
+  template:
+    metadata:
+      name: ebs-snapshots-job
+    spec:
+      containers:
+      - name: ebs-snapshots-job
+        image: quay.io/smile/ebs-snapshooter
+        env:
+          - name: AWS_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: ebs-snapshooter-seretes
+                key: aws-acces-key-id
+          - name: AWS_SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: ebs-snapshooter-seretes
+                key: aws-secret-acces-key
+          - name: AWS_REGION_NAME
+            value: "eu-west-1"
+          - name: AWS_SNS_ARN
+            valueFrom:
+              secretKeyRef:
+                name: ebs-snapshooter-seretes
+                key: aws-sns-arn
+          - name: KEEP_WEEK
+            value: "2"
+          - name: KEEP_DAY
+            value: "3"
+          - name: KEEP_MONTH
+            value: "1"
+      restartPolicy: Never
