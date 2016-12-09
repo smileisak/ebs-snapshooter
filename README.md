@@ -1,4 +1,4 @@
-# EBS-SnapShooter
+# EBS-SnapShooter [![Build Status](https://travis-ci.org/smileisak/ebs-snapshooter.svg?branch=master)](https://travis-ci.org/smileisak/ebs-snapshooter)
 
 EBS-SnapShooter is a python script based on [boto2], that creates daily, weekly on monthly snapshots for all your aws ebs volumes.
 
