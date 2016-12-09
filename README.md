@@ -26,6 +26,24 @@ export AWS_ACCESS_KEY=<aws-access-key> -e AWS_SECRET_KEY=<aws-secret-key> & pyth
 
 You can also run it within docker container. Go to --> https://quay.io/repository/smile/ebs-snapshooter
 
+---
+### Run it as Kubernetes Job:
+
+To run it as a Kubernetes Job all you need is to base64 your secrets within `manifests/secrets.yaml`.
+ Note that `aws-sns-arn` is optional if you want to create AWS SNS Notifications.
+
+```yml
+apiVersion: v1
+type: Opaque
+kind: Secret
+metadata:
+  name: ebs-snapshooter-seretes
+data:
+  aws-acces-key-id: <base64 encoded aws-access-key-id>
+  aws-secret-acces-key: <base64 encoded aws-secret-acces-key>
+  aws-sns-arn: <base64 encoded aws-sns-arn>
+```
+
 ## License
 
 EBS-SnapShooter is BSD-licensed.
