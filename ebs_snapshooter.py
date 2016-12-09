@@ -4,9 +4,30 @@ import boto.sns
 from datetime import datetime
 import time
 import sys
+import os
 import logging
 # Message to return result via SNS
 from boto.exception import EC2ResponseError
+
+
+def get_k8s_env_var(var_name, default_value=None):
+    result = os.environ.get(var_name, default_value)
+    if result is None:
+        return None
+    else:
+        result = result.replace('\n', '')
+
+    return result
+
+def get_config(name, default=None):
+    value = get_k8s_env_var(name)
+    if value is not None:
+        print "[INFO.get_config] - %s : %s " % (name, value)
+        return value
+    else:
+        print "[INFO.get_config] - %s : %s " % (name, default)
+        return default
+
 
 message = ""
 errmsg = ""
@@ -20,7 +41,7 @@ count_errors = 0
 deletelist = []
 
 # define period
-period = "day"
+period = get_config("PERIOD", "day")
 date_suffix = datetime.today().strftime('%a')
 
 # period = 'week'
@@ -30,6 +51,7 @@ date_suffix = datetime.today().strftime('%a')
 # date_suffix = datetime.today().strftime('%b')
 
 # Setup logging
+log_file = get_config('LOG_FILE', "./EBS-Snapshot.log")
 logging.basicConfig(filename="./EBS-Snapshot.log", level=logging.INFO)
 start_message = 'Started taking %(period)s snapshots at %(date)s' % {
     'period': period,
@@ -39,18 +61,18 @@ message += start_message + "\n\n"
 logging.info(start_message)
 
 # Get settings from config.py
-aws_access_key = "****"
-aws_secret_key = "****"
-ec2_region_name = "eu-west-1"
-ec2_region_endpoint = "ec2.eu-west-1.amazonaws.com"
-sns_arn = "arn:aws:sns:eu-west-1:******:EBS_Snapshots"
+aws_access_key = get_config('AWS_ACCESS_KEY')
+aws_secret_key = get_config('AWS_SECRET_KEY')
+ec2_region_name = get_config('AWS_REGION_NAME', "eu-west-1")
+ec2_region_endpoint = "ec2." + ec2_region_name + ".amazonaws.com"
+sns_arn =  get_config('AWS_SNS_ARN')
 
 region = RegionInfo(name=ec2_region_name, endpoint=ec2_region_endpoint)
 
 # Number of snapshots to keep
-keep_week = 3
-keep_day = 3
-keep_month = 1
+keep_week = int(get_config('KEEP_WEEK', 3))
+keep_day = int(get_config('KEEP_DAY', 3))
+keep_month = int(get_config('KEEP_MONTH', 1))
 count_success = 0
 count_total = 0
 
