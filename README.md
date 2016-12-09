@@ -47,8 +47,8 @@ data:
 Create secrets and job: 
 
 ```shell
-kubectl create manifests/secrets.yaml
-kubectl create manifests/job.yaml
+kubectl create -f manifests/secrets.yaml
+kubectl create -f manifests/job.yaml
 ```
 
 ## License
