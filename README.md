@@ -1,1 +1,1 @@
-# aws-snapshooter
+# ebs-snapshooter
