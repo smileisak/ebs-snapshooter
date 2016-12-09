@@ -6,7 +6,7 @@ EBS-SnapShooter is a python script based on boto2, that creates daily, weekly or
 
 ### Requirements:
 
-* [boto2] - Python package that provides interfaces to Amazon Web Services
+* boto2 - Python package that provides interfaces to Amazon Web Services
 
 To install requirements :
 ```
