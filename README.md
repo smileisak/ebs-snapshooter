@@ -44,6 +44,13 @@ data:
   aws-sns-arn: <base64 encoded aws-sns-arn>
 ```
 
+Create secrets and job: 
+
+```shell
+kubectl create manifests/secrets.yaml
+kubectl create manifests/job.yaml
+```
+
 ## License
 
 EBS-SnapShooter is BSD-licensed.
