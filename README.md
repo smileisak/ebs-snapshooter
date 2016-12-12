@@ -2,6 +2,7 @@
 # EBS-SnapShooter [![Build Status](https://travis-ci.org/smileisak/ebs-snapshooter.svg?branch=master)](https://travis-ci.org/smileisak/ebs-snapshooter) [![Docker Repository on Quay](https://quay.io/repository/smile/ebs-snapshooter/status "Docker Repository on Quay")](https://quay.io/repository/smile/ebs-snapshooter)
 
 
+
 EBS-SnapShooter is a python script based on boto2, that creates daily, weekly or monthly snapshots for all your aws ebs volumes.
 
 ### Requirements:
@@ -53,4 +54,4 @@ kubectl create -f manifests/job.yaml
 
 ## License
 
-EBS-SnapShooter is BSD-licensed.
+EBS-SnapShooter is BSD-licensed
